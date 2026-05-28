@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodePlay - User Manual</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@500;700&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --neon-green: #1db954;
+        --neon-red: #ff4757;
+        --bg-dark: #061325;
+        --glass-bg: rgba(6, 19, 37, 0.75);
+        --glass-border: rgba(29, 185, 84, 0.25);
+      }
+
+      body {
+        background: var(--bg-dark) url("assets/picture/intro.png") no-repeat
+          center center;
+        background-size: cover;
+        color: #ffffff;
+        font-family: "Rajdhani", sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* --- HEADER DESIGN --- */
+      header {
+        width: 100%;
+        padding: 35px 0;
+        text-align: center;
+        border-bottom: 1px solid var(--glass-border);
+        background: rgba(6, 19, 37, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 10;
+      }
+
+      .header-title {
+        font-family: "Audiowide", sans-serif;
+        font-size: 1.8rem;
+        color: #ffffff;
+        letter-spacing: 8px;
+        margin: 0;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(29, 185, 84, 0.3);
+      }
+
+      /* --- CONTENT CONTAINER --- */
+      .manual-wrapper {
+        width: 100%;
+        max-width: 900px;
+        flex: 1;
+        overflow-y: auto;
+        padding: 40px 20px;
+        box-sizing: border-box;
+        scrollbar-width: thin;
+        scrollbar-color: var(--neon-green) transparent;
+      }
+
+      .manual-wrapper::-webkit-scrollbar {
+        width: 4px;
+      }
+      .manual-wrapper::-webkit-scrollbar-thumb {
+        background: var(--neon-green);
+        border-radius: 10px;
+      }
+
+      /* --- UPGRADED INSTRUCTION CARD Layout --- */
+      .instruction-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        padding: 30px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+      }
+
+      .card-left {
+        display: flex;
+        gap: 25px;
+        align-items: flex-start;
+      }
+
+      .instruction-card:hover {
+        border-color: var(--neon-green);
+        background: rgba(29, 185, 84, 0.07);
+        box-shadow: 0 0 25px rgba(29, 185, 84, 0.2);
+        transform: translateY(-3px);
+      }
+
+      .step-number {
+        font-family: "Orbitron", sans-serif;
+        font-size: 2.2rem;
+        color: var(--neon-green);
+        opacity: 0.8;
+        font-weight: 700;
+        min-width: 50px;
+        text-shadow: 0 0 10px rgba(29, 185, 84, 0.4);
+      }
+
+      .step-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .step-content h3 {
+        margin: 0 0 8px 0;
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: #fff;
+        transition: color 0.3s ease;
+      }
+
+      .instruction-card:hover .step-content h3 {
+        color: var(--neon-green);
+      }
+
+      .step-content p {
+        margin: 0;
+        font-size: 1.05rem;
+        color: #d1d8e0;
+        line-height: 1.6;
+        font-weight: 500;
+      }
+
+      .step-arrow {
+        font-size: 1.5rem;
+        color: var(--neon-green);
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s ease;
+      }
+
+      .instruction-card:hover .step-arrow {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      /* --- UPGRADED FOOTER NAVIGATION --- */
+      .footer-nav {
+        padding: 25px 0;
+        width: 100%;
+        text-align: center;
+        background: rgba(6, 19, 37, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-top: 1px solid var(--glass-border);
+      }
+
+      .btn-return {
+        color: #ffffff;
+        background: transparent;
+        border: 2px solid #ffffff;
+        padding: 12px 50px;
+        text-decoration: none;
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        border-radius: 25px;
+        letter-spacing: 3px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-transform: uppercase;
+        display: inline-block;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .btn-return:hover {
+        border-color: var(--neon-red);
+        background: var(--neon-red);
+        color: #ffffff;
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="header-title">User Manual</h1>
+    </header>
+
+    <div class="manual-wrapper">
+      <div class="instruction-card">
+        <div class="card-left">
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <h3>Akses Sistem</h3>
+            <p>
+              Klik tombol 'Play' pada halaman utama untuk memecahkan sistem
+              keamanan dan masuk ke Navigation Hub.
+            </p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+
+      <div class="instruction-card">
+        <div class="card-left">
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <h3>Eksplorasi Materi</h3>
+            <p>
+              Buka menu 'Materi Pembelajaran' untuk membaca dan memahami
+              landasan teori dasar serta struktur algoritma pemrograman.
+            </p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+
+      <div class="instruction-card">
+        <div class="card-left">
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <h3>Tonton Video Pembelajaran</h3>
+            <p>
+              Akses menu 'Video Pembelajaran' untuk menyaksikan penjelasan
+              visual serta contoh demo implementasi penulisan kode secara
+              komprehensif.
+            </p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+
+      <div class="instruction-card">
+        <div class="step-number">04</div>
+        <div class="card-left">
+          <div class="step-content">
+            <h3>Evaluasi Mandiri</h3>
+            <p>
+              Setelah menguasai materi teori dan visual, uji ketajaman logika
+              berpikir Anda melalui modul evaluasi interaktif pada menu 'Game'.
+            </p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+
+      <div class="instruction-card">
+        <div class="card-left">
+          <div class="step-number">05</div>
+          <div class="step-content">
+            <h3>Konfigurasi</h3>
+            <p>
+              Sesuaikan preferensi kenyamanan belajar Anda melalui menu
+              'Pengaturan' untuk mengatur kontrol volume suara latar belakang
+              (BGM).
+            </p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="footer-nav">
+      <button class="btn-return" onclick="location.href = 'menu.html'">
+        Acknowledge & Return
+      </button>
+    </div>
+
+    <audio id="sfxClick" src="assets/audio/UI Click.mp3"></audio>
+    <audio id="bgmGlobal" src="assets/audio/relax intro full.mp3" loop></audio>
+
+    <script>
+      const bgm = document.getElementById("bgmGlobal");
+      bgm.volume = 0.4;
+
+      function handleMusic() {
+        const isPlaying = localStorage.getItem("bgmPlaying");
+        const savedTime = localStorage.getItem("bgmCurrentTime");
+
+        if (isPlaying === "true") {
+          if (savedTime) {
+            bgm.currentTime = parseFloat(savedTime);
+          }
+
+          const playPromise = bgm.play();
+
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              document.addEventListener(
+                "click",
+                () => {
+                  if (bgm.paused) bgm.play();
+                },
+                { once: true },
+              );
+            });
+          }
+        }
+      }
+
+      function trackTime() {
+        if (!bgm.paused) {
+          localStorage.setItem("bgmCurrentTime", bgm.currentTime);
+        }
+        requestAnimationFrame(trackTime);
+      }
+
+      window.addEventListener("DOMContentLoaded", handleMusic);
+      requestAnimationFrame(trackTime);
+
+      function playClickSound() {
+        const sfx = document.getElementById("sfxClick");
+        if (sfx) {
+          sfx.currentTime = 0;
+          sfx.play().catch((e) => console.log("SFX blocked:", e));
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const menuElements = document.querySelectorAll(
+          "button, .btn-return, .instruction-card, a",
+        );
+
+        menuElements.forEach((el) => {
+          el.addEventListener("click", (e) => {
+            playClickSound();
+
+            const href = el.getAttribute("href") || el.getAttribute("onclick");
+            if (href && !href.includes("javascript:void(0)")) {
+              e.preventDefault();
+              setTimeout(() => {
+                if (el.tagName === "A") {
+                  window.location.href = el.href;
+                } else {
+                  const target = href.match(/'([^']+)'/);
+                  if (target) window.location.href = target[1];
+                }
+              }, 150);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodePlay – Evaluasi</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --power-green: #1db954;
+        --warning-red: #e74c3c;
+        --dark-navy: #061325;
+        --glass-bg: rgba(6, 19, 37, 0.85);
+        --glass-border: rgba(29, 185, 84, 0.25);
+      }
+
+      /* --- SOLUSI FIX BACKGROUND CACHING / OVERRIDE --- */
+      body.game-body {
+        /* Memecah properti secara spesifik & !important untuk memaksa menimpa css/style.css */
+        background-color: var(--dark-navy) !important;
+        background-image: url("assets/picture/intro.png") !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-attachment: fixed !important;
+        font-family: "Rajdhani", sans-serif;
+        color: #ecf0f1;
+        margin: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* --- SCREEN LAYOUT --- */
+      .screen {
+        display: none;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        box-sizing: border-box;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      .title-main {
+        font-family: "Audiowide", cursive;
+        font-size: clamp(2rem, 4.5vw, 2.8rem);
+        text-align: center;
+        color: #ffffff;
+        letter-spacing: 6px;
+        margin-bottom: 30px;
+        margin-top: 20px;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(29, 185, 84, 0.3);
+      }
+
+      /* --- REPERBAIKAN TAMPILAN PILIH LEVEL (LEBIH RAPAT & MENARIK) --- */
+      .level-grid {
+        display: grid;
+        /* Membuat grid otomatis merapat dengan ukuran kotak level yang presisi */
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+        gap: 15px; /* Merapatkan jarak antar kotak level dari versi bawaan */
+        max-width: 550px; /* Membatasi lebar kontainer agar susunan grid padat di tengah */
+        margin: 0 auto;
+        padding: 25px;
+        background: rgba(6, 19, 37, 0.7);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Kustomisasi tombol level dinamis yang di-generate oleh game.js */
+      .level-btn {
+        aspect-ratio: 1/1;
+        background: rgba(6, 19, 37, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #888888;
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        border-radius: 8px;
+        cursor: not-allowed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+      }
+
+      /* Style tombol level yang sudah terbuka/unlocked */
+      .level-btn.unlocked {
+        border-color: rgba(29, 185, 84, 0.4);
+        color: #ffffff;
+        cursor: pointer;
+        background: linear-gradient(
+          145deg,
+          rgba(6, 19, 37, 0.9),
+          rgba(13, 38, 69, 0.9)
+        );
+      }
+
+      .level-btn.unlocked:hover {
+        border-color: var(--power-green);
+        color: var(--power-green);
+        background: rgba(29, 185, 84, 0.1);
+        transform: scale(1.08);
+        box-shadow: 0 0 15px rgba(29, 185, 84, 0.4);
+      }
+
+      /* --- CARD BOX FOR TRANSITION, STORY & MISSION --- */
+      .card-box {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 40px;
+        max-width: 650px;
+        margin: 8vh auto;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      .card-box h1,
+      .card-box h2 {
+        font-family: "Orbitron", sans-serif;
+        color: #ffffff;
+        letter-spacing: 2px;
+        margin-top: 0;
+      }
+
+      .card-box p {
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #d1d8e0;
+        font-weight: 500;
+        margin-bottom: 30px;
+      }
+
+      .btn-next {
+        background: transparent;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        padding: 12px 45px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        border-radius: 25px;
+        cursor: pointer;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+      }
+      .btn-next:hover {
+        background: var(--power-green);
+        border-color: var(--power-green);
+        box-shadow: 0 0 20px rgba(29, 185, 84, 0.4);
+        transform: scale(1.05);
+      }
+
+      /* --- GAME BOARD PANEL --- */
+      .board {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        max-width: 1100px;
+        margin: 4vh auto;
+        padding: 25px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      /* --- POPUP OVERLAY OVERRIDE --- */
+      .overlay {
+        background: rgba(3, 10, 19, 0.85);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+
+      .win-card {
+        background: #061325;
+        border: 2px solid var(--power-green);
+        box-shadow: 0 0 40px rgba(29, 185, 84, 0.4);
+        border-radius: 16px;
+        padding: 40px;
+      }
+
+      .lose-card {
+        background: #061325;
+        border: 2px solid var(--warning-red);
+        box-shadow: 0 0 40px rgba(231, 76, 60, 0.4);
+        border-radius: 16px;
+        padding: 40px;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+      /* --- UPGRADE WARNA BINTANG POPUP KEMENANGAN --- */
+      .stars-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .star {
+        color: #ffcc00 !important; /* Mengubah warna menjadi kuning emas cerah */
+        font-size: 2.5rem;
+        /* Memberikan efek pendaran neon kuning khas tema game station */
+        text-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+        display: inline-block;
+      }
+
+      /* Membuat bintang bagian tengah berukuran lebih besar */
+      .star.big {
+        font-size: 3.5rem;
+        text-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+        position: relative;
+        top: -5px; /* Mengangkat sedikit posisi bintang tengah agar simetris */
+      }
+    </style>
+  </head>
+  <body class="game-body">
+    <audio id="clickSound" src="assets/audio/UI Click.mp3"></audio>
+    <audio id="correctSound" src="assets/audio/succes game.mp3"></audio>
+    <audio id="wrongSound" src="assets/audio/fail.mp3"></audio>
+    <audio id="winSound" src="assets/audio/win.mp3"></audio>
+    <audio id="loseSound" src="assets/audio/lose.mp3"></audio>
+    <audio id="bgm" src="assets/audio/bgm.mp3" loop></audio>
+
+    <div id="screenLevel" class="screen active">
+      <h1 class="title-main">PILIH LEVEL</h1>
+      <div id="levelContainer" class="level-grid"></div>
+    </div>
+
+    <div id="screenTransisi" class="screen">
+      <div class="card-box">
+        <h1 id="txtLevelTitle">LEVEL 1</h1>
+        <button class="btn-next" onclick="showStory()">NEXT</button>
+      </div>
+    </div>
+
+    <div id="screenSoal" class="screen">
+      <div class="card-box">
+        <p id="txtCerita"></p>
+        <button class="btn-next" onclick="showMission()">NEXT</button>
+      </div>
+    </div>
+
+    <div id="screenMisi" class="screen">
+      <div class="card-box">
+        <h2>MISI</h2>
+        <p id="txtMisi"></p>
+        <button class="btn-next" onclick="startGame()">PLAY!</button>
+      </div>
+    </div>
+
+    <div class="board hidden" id="gameBoard">
+      <div class="board-top">
+        <div class="time">Time: <span id="timer">03:00</span></div>
+        <button class="btn-home" onclick="location.reload()">LEVELS</button>
+      </div>
+
+      <div class="board-content">
+        <div class="grid" id="grid"></div>
+        <div class="panel">
+          <div class="panel-head">
+            <span>Word</span>
+            <span>Point</span>
+          </div>
+          <div id="wordList" class="word-list"></div>
+          <div class="input-row">
+            <input
+              id="inputKata"
+              type="text"
+              readonly
+              placeholder="Klik abjad..."
+            />
+          </div>
+          <div class="btn-row">
+            <button class="btn-cancel" id="cancelBtn">CANCEL</button>
+            <button class="btn-enter" id="enterBtn">ENTER</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="popupWin" class="overlay hidden">
+      <div class="win-card">
+        <h1 class="win-title">MISI SUKSES !</h1>
+        <div class="stars-container">
+          <span class="star">★</span>
+          <span class="star big">★</span>
+          <span class="star">★</span>
+        </div>
+        <h2 class="congrats-text" style="color: white; letter-spacing: 5px">
+          CONGRATULATIONS
+        </h2>
+        <button class="btn-win-next" onclick="handleReload()">NEXT</button>
+      </div>
+    </div>
+
+    <div id="popupLose" class="overlay hidden">
+      <div class="lose-card">
+        <div class="ghost-icon">💀</div>
+        <h1 class="gameover-text">GAME OVER</h1>
+        <button class="btn-back-red" onclick="handleReload()">BACK</button>
+      </div>
+    </div>
+
+    <script src="js/soal.js"></script>
+    <script src="js/game.js"></script>
+    <audio id="bgmGlobal" src="assets/audio/relax intro full.mp3" loop></audio>
+    <audio id="sfxClick" src="assets/audio/UI Click.mp3"></audio>
+
+    <script>
+      const bgm = document.getElementById("bgmGlobal");
+      bgm.volume = 0.4;
+
+      function handleMusic() {
+        const isPlaying = localStorage.getItem("bgmPlaying");
+        const savedTime = localStorage.getItem("bgmCurrentTime");
+
+        if (isPlaying === "true") {
+          if (savedTime) {
+            bgm.currentTime = parseFloat(savedTime);
+          }
+
+          const playPromise = bgm.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              document.addEventListener(
+                "click",
+                () => {
+                  if (bgm.paused) bgm.play();
+                },
+                { once: true },
+              );
+            });
+          }
+        }
+      }
+
+      function trackTime() {
+        if (!bgm.paused) {
+          localStorage.setItem("bgmCurrentTime", bgm.currentTime);
+        }
+        requestAnimationFrame(trackTime);
+      }
+
+      window.addEventListener("DOMContentLoaded", handleMusic);
+      requestAnimationFrame(trackTime);
+
+      function playClickSound() {
+        const sfx = document.getElementById("sfxClick");
+        if (sfx) {
+          sfx.currentTime = 0;
+          sfx.play().catch((e) => console.log("SFX blocked:", e));
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const menuElements = document.querySelectorAll(
+          "button, .btn-play, .menu-item, a",
+        );
+
+        menuElements.forEach((el) => {
+          el.addEventListener("click", (e) => {
+            playClickSound();
+
+            const href = el.getAttribute("href") || el.getAttribute("onclick");
+            if (href && !href.includes("javascript:void(0)")) {
+              e.preventDefault();
+              setTimeout(() => {
+                if (el.tagName === "A") {
+                  window.location.href = el.href;
+                } else {
+                  const target = href.match(/'([^']+)'/);
+                  if (target) window.location.href = target[1];
+                }
+              }, 150);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

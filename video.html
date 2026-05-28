@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Center - CodePlay</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Audiowide&family=Rajdhani:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+      /* --- CONFIGURATION OF ACADEMIC BLUEPRINT --- */
+      :root {
+        --neon: #1db954; /* Warna hijau indikator utama */
+        --bg: #061325; /* Warna dasar biru navy */
+        --glass: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(29, 185, 84, 0.25);
+      }
+
+      body.page {
+        /* Integrasi berkas citra latar belakang intro.png */
+        background: var(--bg) url("assets/picture/intro.png") no-repeat center
+          center;
+        background-size: cover;
+        background-attachment: fixed;
+        font-family: "Rajdhani", sans-serif;
+        margin: 0;
+        overflow: hidden;
+        color: white;
+      }
+
+      .main-wrapper {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        height: 100vh;
+      }
+
+      /* --- SISI KIRI: PANEL NAVIGASI REPOSITORI (GLASSMORPHISM) --- */
+      .sidebar {
+        background: rgba(6, 19, 37, 0.85);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-right: 1px solid var(--glass-border);
+        padding: 30px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar::-webkit-scrollbar {
+        width: 5px;
+      }
+      .sidebar::-webkit-scrollbar-thumb {
+        background: var(--neon);
+        border-radius: 10px;
+      }
+
+      .logo-area {
+        text-align: left;
+        margin-bottom: 40px;
+      }
+
+      .logo-area h2 {
+        font-family: "Audiowide", cursive;
+        color: #ffffff;
+        letter-spacing: 3px;
+        margin: 0;
+        text-shadow: 0 0 10px rgba(29, 185, 84, 0.3);
+      }
+
+      .logo-area p {
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.8rem;
+        color: var(--neon);
+        font-weight: 700;
+        margin-top: 5px;
+        letter-spacing: 1px;
+      }
+
+      .video-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        border-radius: 15px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        transition: 0.3s;
+        border: 1px solid rgba(29, 185, 84, 0.1);
+        background: rgba(6, 19, 37, 0.4);
+      }
+
+      .video-item:hover {
+        background: rgba(29, 185, 84, 0.1);
+        transform: translateX(10px);
+        border-color: var(--neon);
+      }
+
+      .video-item.active {
+        background: rgba(29, 185, 84, 0.2);
+        border-color: var(--neon);
+        box-shadow: 0 0 15px rgba(29, 185, 84, 0.25);
+      }
+
+      .video-item .thumb-mini {
+        width: 100px;
+        height: 60px;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .video-item .title-mini {
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.9rem;
+        color: #eee;
+      }
+
+      /* --- SISI KANAN: THEATER MAIN DISPLAY PANEL --- */
+      .player-zone {
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        overflow-y: auto;
+        background: rgba(
+          6,
+          19,
+          37,
+          0.4
+        ); /* Mengunci kontras keterbacaan teks */
+      }
+
+      .btn-back {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        text-decoration: none;
+        color: #ffffff;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 700;
+        font-size: 0.8rem;
+        padding: 8px 25px;
+        border: 2px solid #ffffff;
+        border-radius: 50px;
+        transition: 0.3s;
+        background: rgba(6, 19, 37, 0.6);
+      }
+
+      .btn-back:hover {
+        color: #ffffff;
+        background: var(--neon);
+        border-color: var(--neon);
+        box-shadow: 0 0 15px rgba(29, 185, 84, 0.5);
+        transform: scale(1.05);
+      }
+
+      .frame-container {
+        width: 100%;
+        max-width: 950px;
+        aspect-ratio: 16/9;
+        background: #020813;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--glass-border);
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* --- AKADEMIS TEXT PANEL CONTAINER --- */
+      .desc-zone {
+        margin-top: 35px;
+        width: 100%;
+        max-width: 950px;
+        background: rgba(6, 19, 37, 0.8);
+        padding: 25px;
+        border-radius: 16px;
+        border: 1px solid var(--glass-border);
+        box-sizing: border-box;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+      }
+
+      .desc-zone h1 {
+        font-family: "Audiowide", cursive;
+        font-size: 2.3rem;
+        margin: 0;
+        background: linear-gradient(to right, #ffffff, var(--neon));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .desc-zone p {
+        font-size: 1.1rem;
+        color: #d1d8e0;
+        line-height: 1.6;
+        margin-top: 15px;
+        font-weight: 500;
+      }
+
+      .badge-ninja {
+        display: inline-block;
+        background: var(--neon);
+        color: white;
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.75rem;
+        margin-bottom: 12px;
+        font-family: "Orbitron", sans-serif;
+        letter-spacing: 1px;
+      }
+    </style>
+  </head>
+  <body class="page">
+    <div class="main-wrapper">
+      <div class="sidebar">
+        <div class="logo-area">
+          <h2>CODEPLAY</h2>
+          <p>MEDIA INSTRUKSI AUDIO-VISUAL</p>
+        </div>
+        <div id="playlist" class="video-list"></div>
+      </div>
+
+      <div class="player-zone">
+        <a href="menu.html" class="btn-back">← KEMBALI KE MENU</a>
+
+        <div class="frame-container">
+          <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+        </div>
+
+        <div class="desc-zone">
+          <span class="badge-ninja">MASTER CLASS</span>
+          <h1 id="vTitle">MODUL DOKUMENTASI AUDIO-VISUAL</h1>
+          <p id="vDesc">
+            Selamat datang pada repositori materi pembelajaran digital CodePlay.
+            Silakan pilih salah satu sub-topik kompetensi pemrograman pada panel
+            navigasi sebelah kiri untuk menginisialisasi pemutaran media visual,
+            demonstrasi sintaksis, serta analisis implementasi logika kode
+            secara komprehensif.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/video.js"></script>
+    <audio id="sfxClick" src="assets/audio/UI Click.mp3"></audio>
+    <audio id="bgmGlobal" src="assets/audio/relax intro full.mp3" loop></audio>
+
+    <script>
+      const bgm = document.getElementById("bgmGlobal");
+      bgm.volume = 0.4;
+
+      function handleMusic() {
+        const isPlaying = localStorage.getItem("bgmPlaying");
+        const savedTime = localStorage.getItem("bgmCurrentTime");
+
+        if (isPlaying === "true") {
+          if (savedTime) {
+            bgm.currentTime = parseFloat(savedTime);
+          }
+
+          const playPromise = bgm.play();
+
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              document.addEventListener(
+                "click",
+                () => {
+                  if (bgm.paused) bgm.play();
+                },
+                { once: true },
+              );
+            });
+          }
+        }
+      }
+
+      function trackTime() {
+        if (!bgm.paused) {
+          localStorage.setItem("bgmCurrentTime", bgm.currentTime);
+        }
+        requestAnimationFrame(trackTime);
+      }
+
+      window.addEventListener("DOMContentLoaded", handleMusic);
+      requestAnimationFrame(trackTime);
+
+      function playClickSound() {
+        const sfx = document.getElementById("sfxClick");
+        if (sfx) {
+          sfx.currentTime = 0;
+          sfx.play().catch((e) => console.log("SFX blocked:", e));
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const menuElements = document.querySelectorAll(
+          "button, .btn-play, .menu-item, .video-item, a",
+        );
+
+        menuElements.forEach((el) => {
+          el.addEventListener("click", (e) => {
+            playClickSound();
+
+            const href = el.getAttribute("href") || el.getAttribute("onclick");
+            if (href && !href.includes("javascript:void(0)")) {
+              e.preventDefault();
+              setTimeout(() => {
+                if (el.tagName === "A") {
+                  window.location.href = el.href;
+                } else {
+                  const target = href.match(/'([^']+)'/);
+                  if (target) window.location.href = target[1];
+                }
+              }, 150);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

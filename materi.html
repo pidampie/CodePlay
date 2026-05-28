@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi Pembelajaran - CodePlay</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --power-green: #1db954;
+        --warning-red: #e74c3c;
+        --dark-navy: #061325;
+        --glass-bg: rgba(6, 19, 37, 0.85);
+        --glass-border: rgba(29, 185, 84, 0.25);
+      }
+
+      body.page {
+        background: var(--dark-navy) url("assets/picture/intro.png") no-repeat
+          center center;
+        background-size: cover;
+        background-attachment: fixed;
+        font-family: "Rajdhani", sans-serif;
+        color: #ecf0f1;
+        margin: 0;
+        padding-bottom: 60px;
+        min-height: 100vh;
+      }
+
+      .materi-container {
+        max-width: 100%;
+        padding: 40px 30px;
+        box-sizing: border-box;
+      }
+
+      /* --- PROFESSIONAL HEADER --- */
+      .header-fun {
+        text-align: center;
+        margin-bottom: 40px;
+        background: rgba(6, 19, 37, 0.65);
+        padding: 25px;
+        border-radius: 16px;
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        max-width: 1200px;
+        margin: 0 auto 40px auto;
+      }
+
+      .title {
+        font-family: "Audiowide", cursive;
+        font-size: clamp(2rem, 5vw, 3rem);
+        color: #ffffff;
+        letter-spacing: 4px;
+        margin: 0 0 10px 0;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(29, 185, 84, 0.3);
+      }
+
+      .subtitle {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--power-green);
+        margin: 0;
+        text-transform: uppercase;
+      }
+
+      /* --- HORIZONTAL SLIDER WRAPPER --- */
+      .materi-slider-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        overflow-x: auto;
+        padding: 20px 10px 40px 10px;
+        scrollbar-width: thin;
+        scrollbar-color: var(--power-green) rgba(255, 255, 255, 0.05);
+        scroll-snap-type: x mandatory;
+      }
+
+      .materi-slider-wrapper::-webkit-scrollbar {
+        height: 8px;
+      }
+      .materi-slider-wrapper::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+      }
+      .materi-slider-wrapper::-webkit-scrollbar-thumb {
+        background: var(--power-green);
+        border-radius: 10px;
+      }
+
+      /* --- OPTIMIZED VERTICAL CARD LAYOUT --- */
+      .premium-materi-card {
+        flex: 0 0 280px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+        scroll-snap-align: start;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        min-height: 250px; /* Diperpendek dari 340px agar padat & tidak kosong */
+      }
+
+      .premium-materi-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--power-green);
+        box-shadow: 0 20px 40px rgba(29, 185, 84, 0.25);
+        background: rgba(6, 19, 37, 0.9);
+      }
+
+      .card-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .card-badge {
+        background: rgba(29, 185, 84, 0.15);
+        border: 1px solid rgba(29, 185, 84, 0.4);
+        color: var(--power-green);
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .card-icon-glowing {
+        color: var(--power-green);
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-shadow: 0 0 8px var(--power-green);
+      }
+
+      .card-main-info {
+        flex-grow: 1;
+        margin-bottom: 15px;
+      }
+
+      .card-main-info h2 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 8px 0;
+        letter-spacing: 1px;
+        line-height: 1.2;
+      }
+
+      .card-main-info p {
+        font-size: 1.05rem;
+        color: #d1d8e0;
+        line-height: 1.4;
+        margin: 0;
+        font-weight: 500;
+      }
+
+      /* Ornamen Garis Pengisi Ruang Kosong */
+      .card-footer-line {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(29, 185, 84, 0.3),
+          transparent
+        );
+        margin-bottom: 15px;
+      }
+
+      .btn-action-card {
+        background: #cc0000;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        border-radius: 30px;
+        padding: 10px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .premium-materi-card:hover .btn-action-card {
+        background: #ff0000;
+        box-shadow: 0 0 15px rgba(204, 0, 0, 0.5);
+      }
+
+      /* --- MODAL DETAIL OVERLAY --- */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(3, 10, 19, 0.85);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 200;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+      .modal.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-content {
+        background: #061325;
+        border: 2px solid var(--power-green);
+        border-radius: 16px;
+        padding: 40px;
+        max-width: 600px;
+        width: 90%;
+        box-shadow: 0 0 40px rgba(29, 185, 84, 0.3);
+        box-sizing: border-box;
+      }
+
+      #materiExample {
+        background: #020813;
+        color: #2ecc71;
+        padding: 20px;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+        margin: 20px 0;
+        border: 1px solid var(--glass-border);
+        overflow-x: auto;
+      }
+
+      .btn-row {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+        width: 100%;
+      }
+
+      .btn-tutup {
+        background: transparent;
+        color: #ffffff;
+        padding: 12px 60px;
+        border-radius: 25px;
+        font-weight: bold;
+        cursor: pointer;
+        border: 2px solid #fff;
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+      }
+      .btn-tutup:hover {
+        border-color: var(--power-green);
+        background: var(--power-green);
+        box-shadow: 0 0 20px rgba(29, 185, 84, 0.4);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body class="page">
+    <div class="materi-container">
+      <div class="header-fun">
+        <h1 class="title">PROGRAMMING CORE SYLLABUS</h1>
+        <p class="subtitle">50 Kompetensi Logika & Struktur Data Interaktif</p>
+      </div>
+
+      <div class="materi-slider-wrapper">
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 01</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>IF</h2>
+            <p>Si tukang pilih kondisi.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(0)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 02</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>ELSE</h2>
+            <p>Rencana B kalau IF gagal.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(1)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 03</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>ELSE IF</h2>
+            <p>Banyak pilihan, banyak janji.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(2)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 04</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>BOOLEAN</h2>
+            <p>Cuma True atau False.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(3)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 05</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>TRUE</h2>
+            <p>Nilai bener (Iya).</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(4)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 06</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>FALSE</h2>
+            <p>Nilai salah (Enggak).</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(5)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 07</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>STRING</h2>
+            <p>Tipe teks/kalimat.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(6)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 08</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>INTEGER</h2>
+            <p>Bilangan bulat.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(7)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 09</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>FLOAT</h2>
+            <p>Bilangan desimal (koma).</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(8)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 10</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>CHAR</h2>
+            <p>Karakter tunggal.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(9)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 11</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>ARRAY</h2>
+            <p>Lemari kumpulan data.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(10)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 12</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>OBJECT</h2>
+            <p>Data super kompleks.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(11)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 13</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>VARIABLE</h2>
+            <p>Tempat simpan data.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(12)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 14</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>CONST</h2>
+            <p>Nilai tetap, anti berubah.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(13)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 15</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>LET</h2>
+            <p>Variabel gaul zaman now.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(14)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 16</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>OPERATOR</h2>
+            <p>Simbol operasi dasar.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(15)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 17</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>==</h2>
+            <p>Cek sama atau enggak.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(16)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 18</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>===</h2>
+            <p>Sama tapi lebih ketat.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(17)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 19</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>!=</h2>
+            <p>Cek tidak sama.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(18)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 20</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>&gt;</h2>
+            <p>Lebih besar.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(19)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 21</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>&lt;</h2>
+            <p>Lebih kecil.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(20)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 22</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>&gt;=</h2>
+            <p>Besar atau sama.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(21)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 23</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>&lt;=</h2>
+            <p>Kecil atau sama.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(22)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 24</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>&amp;&amp;</h2>
+            <p>Logika AND (Harus dua-duanya).</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(23)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 25</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>||</h2>
+            <p>Logika OR (Salah satu aja).</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(24)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 26</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>!</h2>
+            <p>Logika NOT (Kebalikannya).</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(25)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 27</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>INPUT</h2>
+            <p>Minta data ke user.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(26)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 28</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>OUTPUT</h2>
+            <p>Kasih liat data.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(27)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 29</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>PRINT</h2>
+            <p>Tampilin teks di layar.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(28)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 30</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>LOOP</h2>
+            <p>Kerja rodi otomatis.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(29)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 31</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>FOR</h2>
+            <p>Loop yang udah jelas batasnya.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(30)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 32</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>WHILE</h2>
+            <p>Loop selama masih bener.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(31)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 33</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>DO WHILE</h2>
+            <p>Coba dulu baru cek.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(32)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 34</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>INDEX</h2>
+            <p>Nomor antrean data.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(33)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 35</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>LENGTH</h2>
+            <p>Panjang barisan data.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(34)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 36</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>PUSH</h2>
+            <p>Nambahin data baru.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(35)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 37</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>POP</h2>
+            <p>Nendang data terakhir.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(36)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 38</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>FUNCTION</h2>
+            <p>Bungkus kode biar praktis.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(37)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 39</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>PARAMETER</h2>
+            <p>Bahan buat pabrik kode.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(38)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 40</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>RETURN</h2>
+            <p>Hasil dari pabrik kode.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(39)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 41</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>EVENT</h2>
+            <p>Aksi si pengguna.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(40)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 42</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>CLICK</h2>
+            <p>Aksi pas diklik.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(41)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 43</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>DOM</h2>
+            <p>Struktur jeroan HTML.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(42)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 44</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>SELECTOR</h2>
+            <p>Cara milih elemen.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(43)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 45</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>DEBUG</h2>
+            <p>Ritual cari serangga/error.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(44)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 46</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>ERROR</h2>
+            <p>Pas kodenya ngambek.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(45)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 47</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>SYNTAX</h2>
+            <p>Aturan main nulis kode.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(46)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 48</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>LOGIC</h2>
+            <p>Cara mikir program.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(47)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 49</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>ALGORITHM</h2>
+            <p>Langkah-langkah saktinya.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(48)">
+            Pelajari
+          </button>
+        </div>
+
+        <div class="premium-materi-card">
+          <div class="card-top-row">
+            <div class="card-badge">CORE 50</div>
+            <div class="card-icon-glowing">&lt;/&gt;</div>
+          </div>
+          <div class="card-main-info">
+            <h2>FLOWCHART</h2>
+            <p>Gambar alur jurusnya.</p>
+          </div>
+          <div class="card-footer-line"></div>
+          <button class="btn-action-card" onclick="openMateri(49)">
+            Pelajari
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="materiModal" class="modal hidden">
+      <div class="modal-content">
+        <h2
+          id="materiTitle"
+          style="
+            margin-bottom: 5px;
+            font-family: &quot;Orbitron&quot;, sans-serif;
+            color: #fff;
+          "
+        ></h2>
+        <p
+          id="materiDesc"
+          style="color: #bdc3c7; margin-bottom: 20px; font-style: italic"
+        ></p>
+        <pre id="materiExample"></pre>
+        <div class="btn-row">
+          <button class="btn-tutup" onclick="closeMateri()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/materi.js"></script>
+    <audio id="sfxClick" src="assets/audio/UI Click.mp3"></audio>
+    <audio id="bgmGlobal" src="assets/audio/relax intro full.mp3" loop></audio>
+
+    <script>
+      const bgm = document.getElementById("bgmGlobal");
+      bgm.volume = 0.4;
+
+      function handleMusic() {
+        const isPlaying = localStorage.getItem("bgmPlaying");
+        const savedTime = localStorage.getItem("bgmCurrentTime");
+
+        if (isPlaying === "true") {
+          if (savedTime) {
+            bgm.currentTime = parseFloat(savedTime);
+          }
+
+          const playPromise = bgm.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              document.addEventListener(
+                "click",
+                () => {
+                  if (bgm.paused) bgm.play();
+                },
+                { once: true },
+              );
+            });
+          }
+        }
+      }
+
+      function trackTime() {
+        if (!bgm.paused) {
+          localStorage.setItem("bgmCurrentTime", bgm.currentTime);
+        }
+        requestAnimationFrame(trackTime);
+      }
+
+      window.addEventListener("DOMContentLoaded", handleMusic);
+      requestAnimationFrame(trackTime);
+
+      function openMateri(id) {
+        const modal = document.getElementById("materiModal");
+        const sfx = document.getElementById("sfxClick");
+        if (sfx) {
+          sfx.currentTime = 0;
+          sfx.play().catch(() => {});
+        }
+
+        if (typeof window.fillModalData === "function") {
+          window.fillModalData(id);
+        }
+
+        modal.classList.remove("hidden");
+        setTimeout(() => modal.classList.add("active"), 10);
+      }
+
+      function closeMateri() {
+        const modal = document.getElementById("materiModal");
+        modal.classList.remove("active");
+        setTimeout(() => modal.classList.add("hidden"), 400);
+      }
+    </script>
+  </body>
+</html>

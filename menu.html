@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodePlay - Navigation Center</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --neon-green: #1db954; /* Menyelaraskan dengan hijau halaman depan */
+        --neon-red: #ff4757;
+        --bg-dark: #061325; /* Menyelaraskan dasar navy halaman depan */
+        --glass-bg: rgba(
+          6,
+          19,
+          37,
+          0.65
+        ); /* Dibuat sedikit gelap agar teks di atas peta tetap kontras */
+        --glass-border: rgba(29, 185, 84, 0.25);
+      }
+
+      body {
+        /* Mengubah latar belakang menu utama menggunakan gambar intro.png */
+        background: var(--bg-dark) url("assets/picture/intro.png") no-repeat
+          center center;
+        background-size: cover;
+        color: #ffffff;
+        font-family: "Rajdhani", sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      header {
+        width: 100%;
+        padding: 40px 0;
+        text-align: center;
+        border-bottom: 1px solid var(--glass-border);
+        background: rgba(6, 19, 37, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .header-title {
+        font-family: "Audiowide", sans-serif;
+        font-size: 1.8rem;
+        color: #ffffff; /* Mengubah judul menjadi putih bersih seperti logo depan */
+        letter-spacing: 8px;
+        margin: 0;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(29, 185, 84, 0.3);
+      }
+
+      .menu-wrapper {
+        width: 100%;
+        max-width: 900px;
+        flex: 1;
+        overflow-y: auto;
+        padding: 40px 20px;
+        box-sizing: border-box;
+        scrollbar-width: thin;
+        scrollbar-color: var(--neon-green) transparent;
+      }
+
+      .menu-wrapper::-webkit-scrollbar {
+        width: 4px;
+      }
+      .menu-wrapper::-webkit-scrollbar-thumb {
+        background: var(--neon-green);
+        border-radius: 10px;
+      }
+
+      .menu-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        margin-bottom: 25px;
+        padding: 35px;
+        border-radius: 8px; /* Mengubah kelengkungan agar selaras dengan tombol PLAY */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(
+          4px
+        ); /* Memberikan efek blur kaca tipis di atas peta */
+        -webkit-backdrop-filter: blur(4px);
+      }
+
+      .menu-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+        background: var(--neon-green);
+        transition: 0.4s;
+        opacity: 0.1;
+        z-index: 0;
+      }
+
+      .menu-card:hover {
+        border-color: var(--neon-green);
+        box-shadow: 0 0 30px rgba(29, 185, 84, 0.2);
+        transform: translateX(15px);
+      }
+
+      .menu-card:hover::before {
+        width: 100%;
+      }
+
+      .card-info {
+        position: relative;
+        z-index: 1;
+      }
+      .card-info h2 {
+        font-family: "Orbitron", sans-serif;
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: #ffffff;
+        transition: 0.3s;
+      }
+
+      .menu-card:hover .card-info h2 {
+        color: var(--neon-green);
+      }
+      .card-info p {
+        margin: 10px 0 0 0;
+        color: #ccc; /* Mengubah warna abu-abu agar lebih terang di atas background gambar */
+        font-size: 1rem;
+        line-height: 1.6;
+        max-width: 600px;
+      }
+      .arrow-icon {
+        font-size: 1.5rem;
+        color: var(--neon-green);
+        opacity: 0.4;
+        transition: 0.3s;
+      }
+      .menu-card:hover .arrow-icon {
+        opacity: 1;
+        transform: translateX(5px);
+      }
+
+      .footer-nav {
+        padding: 30px 0;
+        width: 100%;
+        text-align: center;
+        background: rgba(6, 19, 37, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-top: 1px solid var(--glass-border);
+      }
+      .btn-return {
+        color: #888;
+        text-decoration: none;
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        transition: 0.3s;
+        text-transform: uppercase;
+      }
+      .btn-return:hover {
+        color: var(--neon-red);
+        text-shadow: 0 0 10px rgba(255, 71, 87, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="header-title">Pilhan Menu</h1>
+    </header>
+
+    <div class="menu-wrapper">
+      <div class="menu-card" data-href="petunjuk.html">
+        <div class="card-info">
+          <h2>Petunjuk Penggunaan</h2>
+          <p>
+            Panduan teknis operasional sistem dan navigasi antarmuka CodePlay.
+          </p>
+        </div>
+        <div class="arrow-icon">→</div>
+      </div>
+
+      <div class="menu-card" data-href="materi.html">
+        <div class="card-info">
+          <h2>Materi Pembelajaran</h2>
+          <p>
+            Modul terstruktur mengenai dasar-dasar algoritma dan pemrograman.
+          </p>
+        </div>
+        <div class="arrow-icon">→</div>
+      </div>
+
+      <div class="menu-card" data-href="video.html">
+        <div class="card-info">
+          <h2>Video Pembelajaran</h2>
+          <p>
+            Vide Pembelajaran mengenai implementasi struktur kode secara
+            komprehensif.
+          </p>
+        </div>
+        <div class="arrow-icon">→</div>
+      </div>
+
+      <div class="menu-card" data-href="evaluasi.html">
+        <div class="card-info">
+          <h2>Game Quiz Puzzle</h2>
+          <p>
+            Uji kompetensi logika pemrograman melalui modul evaluasi interaktif.
+          </p>
+        </div>
+        <div class="arrow-icon">→</div>
+      </div>
+
+      <div class="menu-card" data-href="pengaturan.html">
+        <div class="card-info">
+          <h2>Pengaturan</h2>
+          <p>
+            Konfigurasi parameter sistem, audio, dan preferensi antarmuka
+            pengguna.
+          </p>
+        </div>
+        <div class="arrow-icon">→</div>
+      </div>
+    </div>
+
+    <div class="footer-nav">
+      <a href="index.html" class="btn-return"
+        >Terminating session / Return to core</a
+      >
+    </div>
+
+    <audio id="bgmGlobal" src="assets/audio/relax intro full.mp3" loop></audio>
+    <audio id="sfxClick" src="assets/audio/UI Click.mp3"></audio>
+
+    <script>
+      const bgm = document.getElementById("bgmGlobal");
+      const sfx = document.getElementById("sfxClick");
+
+      // --- LOGIKA BGM SEAMLESS ---
+      function handleMusic() {
+        const isPlaying = localStorage.getItem("bgmPlaying");
+        const savedTime = localStorage.getItem("bgmCurrentTime");
+
+        if (isPlaying === "true") {
+          if (savedTime) bgm.currentTime = parseFloat(savedTime);
+          bgm.volume = 0.4;
+          bgm.play().catch(() => {
+            document.addEventListener(
+              "click",
+              () => {
+                if (bgm.paused) bgm.play();
+              },
+              { once: true },
+            );
+          });
+        }
+      }
+
+      function trackTime() {
+        if (!bgm.paused)
+          localStorage.setItem("bgmCurrentTime", bgm.currentTime);
+        requestAnimationFrame(trackTime);
+      }
+
+      function playClickSound() {
+        if (sfx) {
+          sfx.currentTime = 0;
+          sfx.play().catch(() => {});
+        }
+      }
+
+      // --- SISTEM NAVIGASI & KLIK ---
+      document.addEventListener("DOMContentLoaded", () => {
+        handleMusic();
+        requestAnimationFrame(trackTime);
+
+        // Delegation untuk semua tombol/kartu
+        document.body.addEventListener("click", (e) => {
+          const target = e.target.closest(".menu-card, .btn-return, button, a");
+
+          if (target) {
+            playClickSound();
+
+            // Cek tujuan navigasi
+            const href =
+              target.getAttribute("href") || target.getAttribute("data-href");
+
+            if (href) {
+              e.preventDefault();
+              // Beri jeda 150ms agar suara klik terdengar dulu
+              setTimeout(() => {
+                window.location.href = href;
+              }, 150);
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
